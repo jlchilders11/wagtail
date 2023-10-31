@@ -227,7 +227,10 @@ class LinkElementHandler(InlineEntityElementHandler):
 
 class ExternalLinkElementHandler(LinkElementHandler):
     def get_attribute_data(self, attrs):
-        return {"url": attrs["href"]}
+        return {
+            "url": attrs["href"],
+            "open_in_new_tab": attrs.get("target", "") == "_blank",
+        }
 
 
 class PageLinkElementHandler(LinkElementHandler):
@@ -236,7 +239,12 @@ class PageLinkElementHandler(LinkElementHandler):
             page = Page.objects.get(id=attrs["id"]).specific
         except Page.DoesNotExist:
             # retain ID so that it's still identified as a page link (albeit a broken one)
-            return {"id": int(attrs["id"]), "url": None, "parentId": None}
+            return {
+                "id": int(attrs["id"]),
+                "url": None,
+                "parentId": None,
+                "open_in_new_tab": attrs.get("target", "") == "_blank",
+            }
 
         parent_page = page.get_parent()
 
@@ -244,6 +252,7 @@ class PageLinkElementHandler(LinkElementHandler):
             "id": page.id,
             "url": page.url,
             "parentId": parent_page.id if parent_page else None,
+            "open_in_new_tab": attrs.get("target", "") == "_blank",
         }
 
 

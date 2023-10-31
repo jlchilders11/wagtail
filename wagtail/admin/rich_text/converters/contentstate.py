@@ -27,6 +27,10 @@ def link_entity(props):
     else:
         link_props["href"] = check_url(props.get("url"))
 
+    external_ = props.get("open_in_new_tab", False)
+    if external_:
+        link_props["target"] = "_blank"
+
     return DOM.create_element("a", link_props, props["children"])
 
 

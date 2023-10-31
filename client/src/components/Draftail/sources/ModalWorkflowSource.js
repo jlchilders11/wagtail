@@ -269,6 +269,9 @@ class LinkModalWorkflowSource extends ModalWorkflowSource {
         url = global.chooserUrls.externalLinkChooser;
         urlParams.link_url = data.url;
       }
+      if (data.open_in_new_tab) {
+        urlParams.open_in_new_tab = true;
+      }
     }
 
     return {
@@ -287,11 +290,13 @@ class LinkModalWorkflowSource extends ModalWorkflowSource {
         url: data.url,
         id: data.id,
         parentId: data.parentId,
+        open_in_new_tab: data.open_in_new_tab ?? false,
       };
     }
 
     return {
       url: data.url,
+      open_in_new_tab: data.open_in_new_tab ?? false,
     };
   }
 }

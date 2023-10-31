@@ -528,6 +528,7 @@ class BaseLinkFormView(View):
         return {
             self.link_url_field_name: self.request.GET.get("link_url", ""),
             "link_text": self.request.GET.get("link_text", ""),
+            "open_in_new_tab": self.request.GET.get("open_in_new_tab", False),
         }
 
     def get_url_from_field_value(self, value):
@@ -544,6 +545,7 @@ class BaseLinkFormView(View):
             # (Normally this will match the link_text passed in the URL here anyhow,
             # but that won't account for non-text content such as images.)
             "prefer_this_title_as_link_text": ("link_text" in self.form.changed_data),
+            "open_in_new_tab": self.form.cleaned_data.get("open_in_new_tab", False),
         }
 
     def get(self, request):
@@ -742,6 +744,7 @@ class EmailLinkView(BaseLinkFormView):
             "link_text": self.request.GET.get("link_text", ""),
             "subject": parsed_email["subject"],
             "body": parsed_email["body"],
+            "open_in_new_tab": self.form.cleaned_data.get("open_in_new_tab", False),
         }
 
     def get_url_from_field_value(self, value):

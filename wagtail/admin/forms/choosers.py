@@ -34,11 +34,13 @@ class URLOrAbsolutePathField(forms.URLField):
 class ExternalLinkChooserForm(forms.Form):
     url = URLOrAbsolutePathField(required=True, label=_("URL"))
     link_text = forms.CharField(required=False)
+    open_in_new_tab = forms.BooleanField(required=False)
 
 
 class AnchorLinkChooserForm(forms.Form):
     url = forms.CharField(required=True, label="#")
     link_text = forms.CharField(required=False)
+    open_in_new_tab = forms.BooleanField(required=False)
 
 
 class EmailLinkChooserForm(forms.Form):
@@ -46,11 +48,13 @@ class EmailLinkChooserForm(forms.Form):
     link_text = forms.CharField(required=False)
     subject = forms.CharField(required=False)
     body = forms.CharField(required=False, widget=forms.Textarea(attrs={"rows": 3}))
+    open_in_new_tab = forms.BooleanField(required=False)
 
 
 class PhoneLinkChooserForm(forms.Form):
     phone_number = forms.CharField(required=True)
     link_text = forms.CharField(required=False)
+    open_in_new_tab = forms.BooleanField(required=False)
 
 
 class BaseFilterForm(forms.Form):
